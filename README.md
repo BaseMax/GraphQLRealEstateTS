@@ -68,7 +68,18 @@ You can access the GraphQL Playground by visiting `http://localhost:3000/graphql
 | `getRecentProperties` | Retrieve a list of recently added properties.                   | `getRecentProperties(limit: 10)` |
 | `getPropertyReviews` | Get reviews for a specific property.                             | `getPropertyReviews(propertyId: "property_id_here")` |
 | `getTrendingLocations` | Retrieve trending property locations.                           | `getTrendingLocations(limit: 5)` |
-
+| `getPropertyImages` | Get images associated with a property.                          | `getPropertyImages(propertyId: "property_id_here")` |
+| `getAgentProfile` | Get profile information for a property agent.                   | `getAgentProfile(agentId: "agent_id_here")` |
+| `getAvailableCities` | Retrieve a list of cities with available properties.           | `getAvailableCities` |
+| `getPropertyTypes` | Get a list of property types available.                        | `getPropertyTypes` |
+| `getUserActivity` | Get recent activity for a specific user.                       | `getUserActivity(userId: "user_id_here", limit: 10)` |
+| `getPropertyBookings` | Get bookings for a specific property.                         | `getPropertyBookings(propertyId: "property_id_here")` |
+| `getUserBookings` | Get bookings made by a specific user.                         | `getUserBookings(userId: "user_id_here")` |
+| `getPropertyPayments` | Get payment history for a specific property.                 | `getPropertyPayments(propertyId: "property_id_here")` |
+| `getUserNotifications` | Get notifications for a specific user.                      | `getUserNotifications(userId: "user_id_here")` |
+| `getUnreadNotifications` | Get unread notifications for a specific user.             | `getUnreadNotifications(userId: "user_id_here")` |
+| `getUnreadMessages` | Get unread messages for a specific user.                 | `getUnreadMessages(userId: "user_id_here")` |
+| `getUserChats` | Get chats and messages for a specific user.              | `getUserChats(userId: "user_id_here")` |
 | **Mutations**   |                                                                      |               |
 | `contactSeller` | Send a message to the property seller.                             | `contactSeller(propertyId: "property_id_here", message: "Interested in the property.")` |
 | `addToFavorites` | Add a property to a user's list of favorites.                     | `addToFavorites(userId: "user_id_here", propertyId: "property_id_here")` |
@@ -155,6 +166,84 @@ mutation ContactSeller($propertyId: ID!, $message: String!) {
     message
   }
 }
+```
+
+## Database Schema
+
+```sql
+-- Table to store users
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store properties
+CREATE TABLE properties (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  location VARCHAR(255) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  property_type VARCHAR(50) NOT NULL,
+  agent_id INT REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store property images
+CREATE TABLE property_images (
+  id SERIAL PRIMARY KEY,
+  property_id INT REFERENCES properties(id),
+  image_url VARCHAR(255) NOT NULL
+);
+
+-- Table to store property reviews
+CREATE TABLE property_reviews (
+  id SERIAL PRIMARY KEY,
+  property_id INT REFERENCES properties(id),
+  user_id INT REFERENCES users(id),
+  rating INT NOT NULL,
+  comment TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store user favorites
+CREATE TABLE user_favorites (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  property_id INT REFERENCES properties(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store property bookings
+CREATE TABLE property_bookings (
+  id SERIAL PRIMARY KEY,
+  property_id INT REFERENCES properties(id),
+  user_id INT REFERENCES users(id),
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store user notifications
+CREATE TABLE user_notifications (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  message TEXT NOT NULL,
+  is_read BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to store user messages
+CREATE TABLE user_messages (
+  id SERIAL PRIMARY KEY,
+  sender_id INT REFERENCES users(id),
+  recipient_id INT REFERENCES users(id),
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ### Contributing
