@@ -154,6 +154,7 @@ query GetPropertyDetails($propertyId: ID!) {
     }
   }
 }
+```
 
 ### Mutations
 
