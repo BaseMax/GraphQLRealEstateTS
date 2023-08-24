@@ -17,17 +17,54 @@ model User {
   firstName String 
   lastName  String
   email     String @unique 
-  username     String @unique 
+  username  String @unique 
   password  String 
 }
 
 model Property {
-  id String @id @default(uuid())
-  images String[]
-  title String 
+  id          String @id @default(uuid())
+  images      String[]
+  title       String 
   description String 
-  price Int
-  location String
+  price       Int
+  location    String
 }
 
 
+model Review {
+  id      String @id @default(uuid())
+  comment String
+  rating  String 
+}
+
+
+model Favorites {
+  id      String @id @default(uuid())
+}
+
+model Booking {
+  id          String @id @default(uuid())
+  start_date  DateTime
+  end_date    DateTime 
+  created_at  DateTime 
+}
+
+
+model Payment {
+  id     String @id @default(uuid())
+  amount String
+}
+
+model Notification{
+  id String @id @default(uuid())
+}
+
+
+model Message {
+  id String @id @default(uuid())
+}
+
+
+model Report{
+  id String @id @default(uuid())
+}
