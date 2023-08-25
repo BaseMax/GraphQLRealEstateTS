@@ -8,6 +8,9 @@
     "module": "CommonJS",
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true
+    "esModuleInterop" : true ,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true ,
+    "useDefineForClassFields": false , 
   }
 }
