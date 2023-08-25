@@ -13,12 +13,20 @@ datasource db {
 
 
 model User {
-  id        String @id @default(uuid())
-  firstName String 
-  lastName  String
-  email     String @unique 
-  username  String @unique 
-  password  String 
+  id                  String @id @default(uuid())
+  firstName           String 
+  lastName            String
+  email               String @unique 
+  username            String @unique 
+  password            String 
+  reviews             Review[]
+  properties          Property[]
+  favorites           Favorite[]
+  bookings            Booking[]
+  messagesSent        Message[] @relation("Sender")
+  messagesReceived    Message[] @relation("Recipient")
+  notifiactions       Notification[]
+  reports             Report[]
 }
 
 model Property {
@@ -28,43 +36,90 @@ model Property {
   description String 
   price       Int
   location    String
+  userId      String 
+  seller      User  @relation(fields: [userId] , references: [id])
+  favorites   Favorite[]
+  Bookings    Booking[]
+  reviews     Review[]
 }
 
 
 model Review {
-  id      String @id @default(uuid())
-  comment String
-  rating  String 
+  id          String @id @default(uuid())
+  comment     String
+  rating      String 
+  userId      String 
+  user        User @relation(fields: [userId] , references: [id])
+  propertyId  String
+  property    Property @relation(fields: [propertyId],references: [id])
 }
 
 
-model Favorites {
+
+model Favorite {
   id      String @id @default(uuid())
+  
+  userId  String 
+  user    User @relation(fields: [userId] , references: [id])
+
+  propertyId  String 
+  property    Property @relation(fields: [propertyId] , references: [id])
 }
 
 model Booking {
   id          String @id @default(uuid())
-  start_date  DateTime
+  userId      String
+  user        User @relation(fields: [userId],references: [id])
+  propertyId  String 
+  property    Property @relation(fields: [propertyId],references: [id])
+  payments    Payment[]
+  start_date  DateTime @default(now())
   end_date    DateTime 
-  created_at  DateTime 
+  created_at  DateTime @default(now())
 }
 
 
 model Payment {
-  id     String @id @default(uuid())
-  amount String
+  id          String @id @default(uuid())
+  amount      Int
+  status      Payment_status @default(PENDING)
+  bookingId   String
+  booking     Booking @relation(fields: [bookingId],references: [id])
+  created_at  DateTime @default(now())
 }
 
 model Notification{
-  id String @id @default(uuid())
+  id          String @id @default(uuid())
+  message     String 
+  is_read     Boolean
+  userId      String 
+  user User   @relation(fields: [userId],references: [id])
+  created_at  DateTime @default(now())
 }
 
 
 model Message {
-  id String @id @default(uuid())
+  id            String @id @default(uuid())
+  content       String 
+  sender        User     @relation("Sender", fields: [senderId], references: [id])
+  senderId      String
+  recipient     User     @relation("Recipient", fields: [recipientId], references: [id])
+  recipientId   String
+  create_at     DateTime @default(now())
 }
 
 
 model Report{
-  id String @id @default(uuid())
+  id          String @id @default(uuid())
+  userId      String 
+  user        User @relation(fields: [userId],references: [id])
+  created_at  DateTime @default(now())
+}
+
+
+enum Payment_status {
+  END
+  PENDING 
+  CLOSE 
+  SUCCESS 
 }
