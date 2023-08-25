@@ -4,8 +4,8 @@
   "description": "This project is a property listing website that utilizes GraphQL in TypeScript for querying property data and performing mutations for user interactions. Users can search for properties, view property details, and contact sellers.",
   "main": "index.js",
   "scripts": {
-    "start:dev": "ts-node src/app.ts",
-    "start:watch": "tsc-watch --onSuccess \"node dist/app.js\"",
+    "start": "node dist/app.js",
+    "start:dev": "tsc-watch --onSuccess \"node dist/app.js\"",
     "build": "tsc"
   },
   "repository": {
@@ -20,13 +20,25 @@
   },
   "homepage": "https://github.com/BaseMax/GraphQLRealEstateTS#readme",
   "dependencies": {
+    "@types/passport": "^1.0.12",
+    "@types/passport-jwt": "^3.0.9",
+    "apollo-server": "^3.12.0",
     "apollo-server-express": "^3.12.0",
+    "bcrypt": "^5.1.1",
+    "config": "^3.3.9",
     "express": "^4.18.2",
-    "graphql": "^16.8.0",
+    "graphql": "^15.8.0",
+    "graphql-scalars": "^1.22.2",
+    "jwt-passport": "^0.0.5",
     "nodemon": "^3.0.1",
-    "tsconfig-paths": "^4.2.0"
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.1.13",
+    "tsconfig-paths": "^4.2.0",
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.3",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
