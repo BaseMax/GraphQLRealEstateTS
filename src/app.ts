@@ -1,16 +1,17 @@
-import "reflect-metadata"
-import {} from 'config';
-
+import "reflect-metadata";
+import './jwt/jwt.startegy';
 
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express'
 import passport from "passport";
 import { buildSchemaSync } from "type-graphql";
-import { ApolloServerPluginInlineTrace } from "apollo-server-core";
-import { UserResovler } from "./resolvers/user.resolver";
 import { getErrorCode } from "./errors/http-error";
-import { AuthResolver } from "./resolvers/auth.resolver";
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginInlineTrace } from "apollo-server-core";
 
+import { authChecker } from "./middlewares/auth.middleware";
+
+import { AuthResolver } from "./resolvers/auth.resolver";
+import { UserResovler } from "./resolvers/user.resolver";
 
 (async ()=>{
     const app = express()
@@ -27,6 +28,7 @@ import { AuthResolver } from "./resolvers/auth.resolver";
             AuthResolver , 
         ] , 
         validate : false ,
+        authChecker ,
     }) ;
 
     const apolloServer = new ApolloServer({
@@ -39,8 +41,8 @@ import { AuthResolver } from "./resolvers/auth.resolver";
         formatError : (err)=>{
             const error = getErrorCode(err.message);
             
-            if(err.message === "INTERNAL_SERVER_ERROR"){
-                return ({ message: err.message, statusCode : 500 })
+            if(err.extensions.code === "INTERNAL_SERVER_ERROR"){
+                return ({ message: err.message , statusCode : 500})
             }
             return ({ message: error.message, statusCode : error.statusCode })
         }
