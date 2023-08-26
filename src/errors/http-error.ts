@@ -3,7 +3,8 @@ export const ErrorName = {
     SERVER_ERROR: 'SERVER_ERROR' , 
     PASSWORD_ERROR : 'PASSWORD_ERROR' , 
     EXIST_ERROR : 'EXIST_ERROR' , 
-    INVALID_USERNAME : 'INVALID_USERNAME'
+    INVALID_USERNAME : 'INVALID_USERNAME' , 
+    UNAUTHORIZED : 'UNAUTHORIZED'
 }
   
 
@@ -27,6 +28,10 @@ export const ErrorType = {
     "INVALID_USERNAME" : {
       message : 'Username is invalid' , 
       statusCode : 400 
+    } , 
+    "UNAUTHORIZED" : {
+      message : ' Unauthorized' , 
+      statusCode : 401
     }
 }
 
