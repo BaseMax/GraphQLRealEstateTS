@@ -20,6 +20,6 @@ export class AuthResolver {
  
     @Mutation(()=>AuthType)
     register(@Arg('registerInput' , ()=>RegisterInput)  registerInput:RegisterInput){
-        return this.authService.login(registerInput);
+        return this.authService.register(registerInput);
     }
 }
