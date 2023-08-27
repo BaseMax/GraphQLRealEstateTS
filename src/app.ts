@@ -12,6 +12,7 @@ import { authChecker } from "./middlewares/auth.middleware";
 
 import { AuthResolver } from "./resolvers/auth.resolver";
 import { UserResovler } from "./resolvers/user.resolver";
+import { PropertyResolver } from "./resolvers/property.resolver";
 
 (async ()=>{
     const app = express()
@@ -25,9 +26,10 @@ import { UserResovler } from "./resolvers/user.resolver";
     const schema = buildSchemaSync({
         resolvers : [
             UserResovler ,
-            AuthResolver , 
+            AuthResolver ,
+            PropertyResolver ,
         ] , 
-        validate : false ,
+        validate : true ,
         authChecker ,
     }) ;
 
