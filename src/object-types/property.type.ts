@@ -1,5 +1,6 @@
 import { Field, ID, Int, ObjectType } from "type-graphql";
 import { UserType } from "./user.type";
+import { ReviewType } from "./review.type";
 
 @ObjectType()
 export class PropertyType { 
@@ -21,14 +22,9 @@ export class PropertyType {
     @Field(()=>String)
     location : string ; 
 
-    userId : string 
-
     @Field(()=>UserType)
-    Seller : UserType ; 
+    seller : UserType ; 
 
-    favorites : any ;
-
-    Bookings : any ; 
-
-    reviews : any ; 
+    @Field(()=>[ReviewType])
+    reviews : ReviewType[]; 
 }
