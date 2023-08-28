@@ -6,7 +6,8 @@ export const ErrorName = {
     INVALID_USERNAME : 'INVALID_USERNAME' , 
     UNAUTHORIZED : 'UNAUTHORIZED' ,
     FORBIDDEN : 'FORBIDDEN' , 
-    NOTFOUND : 'NOTFOUND'
+    NOTFOUND : 'NOTFOUND' ,
+    PROPERTY_NOTFOUND : 'PROPERTY_NOTFOUND'
 }
   
 
@@ -42,7 +43,12 @@ export const ErrorType = {
     "NOTFOUND" : {
       message : 'Item not found' , 
       statusCode : 404 
+    } , 
+    "PROPERTY_NOTFOUND" : {
+      message : 'Property not found' ,
+      statusCode : 404 ,
     }
+
 }
 
 
