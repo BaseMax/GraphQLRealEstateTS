@@ -1,4 +1,4 @@
-import { PrismaClient, Property } from "@prisma/client";
+import { Prisma, PrismaClient, Property } from "@prisma/client";
 import { CreatePropertyInput } from "./dto/create-property.input";
 import { StatusResult } from "../utils/status-result.type";
 import { ErrorName } from "../utils/errors/http-error";
@@ -12,6 +12,7 @@ export class PropertyService {
         @inject('PrismaClient') private readonly prisma:PrismaClient
     ){}
 
+    
     async createUserProperty(user:IUser , createPropertyInput:CreatePropertyInput):Promise<StatusResult>{
         const {
             description , 
