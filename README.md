@@ -62,7 +62,7 @@ yarn install
 Start the server:
 
 ```bash
-npm start
+npm run start:dev
 # or
 yarn start
 ```
