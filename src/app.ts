@@ -1,20 +1,27 @@
 import "reflect-metadata";
-import './jwt/jwt.startegy';
+import './auth/jwt/jwt.startegy';
 
 import express from 'express';
 import passport from "passport";
 import { buildSchemaSync } from "type-graphql";
-import { getErrorCode } from "./errors/http-error";
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginInlineTrace } from "apollo-server-core";
 
-import { authChecker } from "./middlewares/auth.middleware";
+import { authChecker } from "./auth/auth.middleware";
 
-import { AuthResolver } from "./resolvers/auth.resolver";
-import { UserResovler } from "./resolvers/user.resolver";
-import { PropertyResolver } from "./resolvers/property.resolver";
+import { AuthResolver } from "./auth/auth.resolver";
+import { UserResovler } from "./user/user.resolver";
+import { PropertyResolver } from "./property/property.resolver";
+import path from 'path';
+import { container } from "tsyringe";
+import { PrismaClient } from "@prisma/client";
+import { getErrorCode } from "./utils/errors/http-error";
 
 (async ()=>{
+    container.register<PrismaClient>("PrismaClient", {
+        useValue: new PrismaClient(),
+    });
+
     const app = express()
     const port = process.env.PORT || 3000 ;
 
@@ -28,9 +35,11 @@ import { PropertyResolver } from "./resolvers/property.resolver";
             UserResovler ,
             AuthResolver ,
             PropertyResolver ,
-        ] , 
-        validate : true ,
-        authChecker ,
+        ] ,
+        validate : false ,
+        authChecker , 
+        emitSchemaFile : path.resolve(__dirname , "schema.graphql") ,
+        container : {get : (cls)=>container.resolve(cls)},
     }) ;
 
     const apolloServer = new ApolloServer({
@@ -42,10 +51,6 @@ import { PropertyResolver } from "./resolvers/property.resolver";
         introspection: true, 
         formatError : (err)=>{
             const error = getErrorCode(err.message);
-            
-            if(err.extensions.code === "INTERNAL_SERVER_ERROR"){
-                return ({ message: err.message , statusCode : 500})
-            }
             return ({ message: error.message, statusCode : error.statusCode })
         }
     })
