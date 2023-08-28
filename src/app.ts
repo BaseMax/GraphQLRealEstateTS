@@ -16,6 +16,7 @@ import path from 'path';
 import { container } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
 import { getErrorCode } from "./utils/errors/http-error";
+import { ReviewResolver } from "./review/review.resolver";
 
 (async ()=>{
     container.register<PrismaClient>("PrismaClient", {
@@ -35,6 +36,7 @@ import { getErrorCode } from "./utils/errors/http-error";
             UserResovler ,
             AuthResolver ,
             PropertyResolver ,
+            ReviewResolver
         ] ,
         validate : false ,
         authChecker , 
