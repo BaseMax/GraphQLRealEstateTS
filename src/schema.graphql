@@ -15,6 +15,12 @@ input CreatePropertyInput {
   title: String!
 }
 
+input CreateReviewInput {
+  comment: String!
+  propertyId: String!
+  rating: String!
+}
+
 input LoginInput {
   password: String!
   username: String!
@@ -22,9 +28,12 @@ input LoginInput {
 
 type Mutation {
   createProperty(input: CreatePropertyInput!): StatusResult!
+  createReview(input: CreateReviewInput!): StatusResult!
   login(input: LoginInput!): AuthType!
   register(input: RegisterInput!): AuthType!
+  removeReview(id: String!): StatusResult!
   updateProperty(input: UpdatePropertyInput!): StatusResult!
+  updateReview(input: UpdateReviewInput!): StatusResult!
 }
 
 type PropertyType {
@@ -40,7 +49,11 @@ type PropertyType {
 
 type Query {
   findAllProperty: [PropertyType!]!
+  findAllReview: [ReviewType!]!
+  findAllUserReview: [ReviewType!]!
   findOneProperty(id: String!): PropertyType!
+  findOneReview(id: String!): ReviewType!
+  findOneUserReview(id: String!): ReviewType!
   me: UserType!
 }
 
@@ -55,10 +68,9 @@ input RegisterInput {
 type ReviewType {
   comment: String!
   id: ID!
-  propertyId: String!
+  property: PropertyType!
   rating: String!
   user: UserType!
-  userId: String!
 }
 
 type StatusResult {
@@ -73,6 +85,12 @@ input UpdatePropertyInput {
   location: String!
   price: Int!
   title: String!
+}
+
+input UpdateReviewInput {
+  comment: String!
+  id: String!
+  rating: String!
 }
 
 type UserType {
