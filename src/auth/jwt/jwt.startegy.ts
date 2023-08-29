@@ -11,7 +11,15 @@ const jwtOption = {
 }
 
 passport.use(new Strategy(jwtOption , async (payload , done)=>{
-    const user = await prisma.user.findUnique({where:{id : payload.sub}})
+    const user = await prisma.user.findUnique({
+        where:{ id : payload.sub} , 
+        include : {
+            messagesReceived : true , 
+            messagesSent : true , 
+            notifiactions : true , 
+            favorites : true , 
+        }
+    })
 
     if(!user){
         return done(Error(ErrorName.UNAUTHORIZED) , false)

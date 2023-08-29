@@ -10,7 +10,4 @@ export class NotificationService {
         private readonly prisma:PrismaClient
     ){}
 
-    async create(user:IUser , ):Promise<StatusResult>{
-        
-    }
 }

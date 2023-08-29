@@ -9,14 +9,18 @@ import { ApolloServerPluginInlineTrace } from "apollo-server-core";
 
 import { authChecker } from "./auth/auth.middleware";
 
-import { AuthResolver } from "./auth/auth.resolver";
-import { UserResovler } from "./user/user.resolver";
-import { PropertyResolver } from "./property/property.resolver";
 import path from 'path';
 import { container } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
-import { getErrorCode } from "./utils/errors/http-error";
+import { ErrorName, getErrorCode } from "./utils/errors/http-error";
+
+// Resolvers
 import { ReviewResolver } from "./review/review.resolver";
+import { ReportResolver } from "./report/report.resolver";
+import { AuthResolver } from "./auth/auth.resolver";
+import { UserResovler } from "./user/user.resolver";
+import { PropertyResolver } from "./property/property.resolver";
+import { MessageResolver } from "./message/message.resolver";
 
 (async ()=>{
     container.register<PrismaClient>("PrismaClient", {
@@ -36,7 +40,9 @@ import { ReviewResolver } from "./review/review.resolver";
             UserResovler ,
             AuthResolver ,
             PropertyResolver ,
-            ReviewResolver
+            ReviewResolver ,
+            ReportResolver ,
+            MessageResolver ,
         ] ,
         validate : false ,
         authChecker , 
@@ -52,8 +58,13 @@ import { ReviewResolver } from "./review/review.resolver";
         plugins: [ApolloServerPluginInlineTrace()] , 
         introspection: true, 
         formatError : (err)=>{
-            const error = getErrorCode(err.message);
-            return ({ message: error.message, statusCode : error.statusCode })
+            if(ErrorName[err.message]){
+                const error = getErrorCode(err.message);
+            
+                return ({ message: error.message, statusCode : error.statusCode })
+            }
+
+            return {message : err.message} ; 
         }
     })
 

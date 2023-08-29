@@ -1,10 +1,10 @@
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class CreateNotificationInput {
+export class UpdateMessageInput {
     @Field(()=>String)
-    message : string ;
-     
+    id : string ; 
+
     @Field(()=>String)
-    userId : string ; 
+    content : string ; 
 }

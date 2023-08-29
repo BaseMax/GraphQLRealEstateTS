@@ -1,4 +1,7 @@
 export const ErrorName = {
+    NOTFOUND_MESSAGE : 'NOTFOUND_MESSAGE' ,
+    NOTFOUND_USER : 'NOTFOUND_USER',
+    CUSTOM_ERROR : 'CUSTOM_ERROR',
     USER_ALREADY_EXISTS: 'USER_ALREADY_EXISTS',
     SERVER_ERROR: 'SERVER_ERROR' , 
     PASSWORD_ERROR : 'PASSWORD_ERROR' , 
@@ -12,6 +15,14 @@ export const ErrorName = {
   
 
 export const ErrorType = {
+     "NOTFOUND_MESSAGE" : {
+      message : 'Message is not found' , 
+      statusCode : 404 
+    } ,
+    "NOTFOUND_USER" : {
+      message : 'User is not found' , 
+      statusCode : 404 
+    } ,
     "USER_ALREADY_EXISTS": {
       message: 'User is already exists.',
       statusCode: 403
