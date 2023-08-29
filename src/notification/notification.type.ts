@@ -9,8 +9,6 @@ export class NotificationType {
     @Field(()=>String)
     message : string ; 
 
-    userId : string ; 
-
     @Field(()=>UserType)
     user : UserType ;
 
