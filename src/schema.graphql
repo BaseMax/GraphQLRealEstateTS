@@ -15,25 +15,52 @@ input CreatePropertyInput {
   title: String!
 }
 
+input CreateReportInput {
+  propertyId: String!
+  text: String!
+}
+
 input CreateReviewInput {
   comment: String!
   propertyId: String!
   rating: String!
 }
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 input LoginInput {
   password: String!
   username: String!
 }
 
+type MessageType {
+  content: String!
+  created_at: DateTime!
+  id: ID!
+  recipient: UserType!
+  sender: UserType!
+}
+
 type Mutation {
+  RemoveReport(id: String!): StatusResult!
   createProperty(input: CreatePropertyInput!): StatusResult!
+  createReport(input: CreateReportInput!): StatusResult!
   createReview(input: CreateReviewInput!): StatusResult!
   login(input: LoginInput!): AuthType!
   register(input: RegisterInput!): AuthType!
   removeReview(id: String!): StatusResult!
   updateProperty(input: UpdatePropertyInput!): StatusResult!
   updateReview(input: UpdateReviewInput!): StatusResult!
+}
+
+type NotificationType {
+  created_at: DateTime!
+  id: ID!
+  message: String!
+  user: UserType!
 }
 
 type PropertyType {
@@ -50,9 +77,11 @@ type PropertyType {
 type Query {
   findAllProperty: [PropertyType!]!
   findAllReview: [ReviewType!]!
+  findAllUserReport: [ReportType!]!
   findAllUserReview: [ReviewType!]!
   findOneProperty(id: String!): PropertyType!
   findOneReview(id: String!): ReviewType!
+  findOneUserReport(id: String!): ReportType!
   findOneUserReview(id: String!): ReviewType!
   me: UserType!
 }
@@ -63,6 +92,14 @@ input RegisterInput {
   lastName: String!
   password: String!
   username: String!
+}
+
+type ReportType {
+  created_at: DateTime!
+  id: ID!
+  property: PropertyType!
+  text: String!
+  user: UserType!
 }
 
 type ReviewType {
@@ -98,5 +135,8 @@ type UserType {
   firstName: String!
   id: String!
   lastName: String!
+  messageSent: [MessageType!]!
+  messagesReceived: [MessageType!]!
+  notifiactions: [NotificationType!]!
   username: String!
 }

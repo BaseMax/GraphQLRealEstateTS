@@ -16,7 +16,6 @@ export class PropertyResolver {
         private readonly propertyService:PropertyService
     ){}
 
-    @Authorized()
     @Query(()=>[PropertyType])
     findAllProperty(@Ctx() context:ContextType){
         const user =context.req.user as IUser ;
@@ -25,7 +24,6 @@ export class PropertyResolver {
     }
 
 
-    @Authorized()
     @Query(()=>PropertyType)
     findOneProperty(
         @Ctx() context:ContextType ,

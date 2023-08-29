@@ -9,13 +9,8 @@ export class MessageType {
     @Field(()=>String)
     content : string; 
 
-    senderId : string ;
-
     @Field(()=>UserType)
     sender : UserType ; 
-
-
-    recipientId : string ; 
 
     @Field(()=>UserType)
     recipient : UserType ;

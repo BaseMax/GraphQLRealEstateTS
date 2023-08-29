@@ -1,4 +1,6 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { MessageType } from "../message/message.type";
+import { NotificationType } from "../notification/notification.type";
+import { Field , ObjectType } from "type-graphql";
 
 @ObjectType()
 export class UserType {
@@ -17,21 +19,12 @@ export class UserType {
     @Field(()=>String)
     username : string ; 
 
-    password : string ; 
+    @Field(()=>[MessageType])
+    messageSent : MessageType[] ; 
 
-    reviews : any ; 
+    @Field(()=>[MessageType])
+    messagesReceived : MessageType[] ; 
 
-    properties : any ; 
-
-    favorites : any ; 
-
-    reports : any ; 
-
-    bookings : any ; 
-
-    messageSent : any ; 
-
-    messagesReceived : any ; 
-
-    notifiactions : any ; 
+    @Field(()=>[NotificationType])
+    notifiactions : NotificationType[]; 
 }
