@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "Payment_status" AS ENUM ('END', 'PENDING', 'CLOSE', 'SUCCESS');
 
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'SELLER', 'USER');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -9,6 +12,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "roles" "Role"[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -94,6 +98,8 @@ CREATE TABLE "Message" (
 -- CreateTable
 CREATE TABLE "Report" (
     "id" TEXT NOT NULL,
+    "text" TEXT NOT NULL,
+    "propertyId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -138,6 +144,9 @@ ALTER TABLE "Message" ADD CONSTRAINT "Message_senderId_fkey" FOREIGN KEY ("sende
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_recipientId_fkey" FOREIGN KEY ("recipientId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Report" ADD CONSTRAINT "Report_propertyId_fkey" FOREIGN KEY ("propertyId") REFERENCES "Property"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Report" ADD CONSTRAINT "Report_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

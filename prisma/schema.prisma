@@ -41,6 +41,7 @@ model Property {
   favorites   Favorite[]
   Bookings    Booking[]
   reviews     Review[]
+  reports     Report[]
 }
 
 
@@ -111,8 +112,12 @@ model Message {
 
 model Report{
   id          String @id @default(uuid())
+  text        String 
+  propertyId  String 
+  proprty     Property @relation(fields: [propertyId],references: [id])
   userId      String 
   user        User @relation(fields: [userId],references: [id])
+  
   created_at  DateTime @default(now())
 }
 
