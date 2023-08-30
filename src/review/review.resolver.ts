@@ -60,7 +60,7 @@ export class ReviewResolver {
     
     @Authorized()
     @Mutation(()=>StatusResult)
-    createReview(
+    addPropertyReview(
         @Arg('input') createReviewInput:CreateReviewInput , 
         @Ctx() context:ContextType ,
     ){
