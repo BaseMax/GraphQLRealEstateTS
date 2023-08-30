@@ -21,6 +21,7 @@ import { AuthResolver } from "./auth/auth.resolver";
 import { UserResovler } from "./user/user.resolver";
 import { PropertyResolver } from "./property/property.resolver";
 import { MessageResolver } from "./message/message.resolver";
+import { FavoriteResolver } from "./favorite/favorite.resolver";
 
 (async ()=>{
     container.register<PrismaClient>("PrismaClient", {
@@ -43,6 +44,7 @@ import { MessageResolver } from "./message/message.resolver";
             ReviewResolver ,
             ReportResolver ,
             MessageResolver ,
+            FavoriteResolver ,
         ] ,
         validate : false ,
         authChecker , 
