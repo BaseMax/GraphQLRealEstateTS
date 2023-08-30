@@ -7,14 +7,8 @@ export class FavoriteType {
     @Field(()=>String)
     id : string ; 
 
-    // hidden 
-    userId : string ;
-
     @Field(()=>UserType)
-    user : UserType;
-
-    // hidden
-    propertyId : string ; 
+    user : UserType;; 
 
     @Field(()=>PropertyType)
     property : PropertyType ;
