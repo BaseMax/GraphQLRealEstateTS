@@ -1,0 +1,17 @@
+version: '1'
+services:
+  nodejs-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./*:/app/
+    depends_on:
+      - postman
+
+  postman:
+    image: postman/newman
+    volumes:
+      - ./test:/etc/newman
