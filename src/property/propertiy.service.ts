@@ -12,6 +12,24 @@ export class PropertyService {
         @inject('PrismaClient') private readonly prisma:PrismaClient
     ){}
 
+
+    async findOne(where:Prisma.PropertyWhereInput):Promise<Property>{
+        const propertiy = await this.prisma.property.findFirst({
+            where , 
+            include : {
+                reviews : true , 
+                seller : true ,
+                reports : true ,
+            }
+        })
+
+        if(!propertiy){
+            throw new Error(ErrorName.PROPERTY_NOTFOUND);
+        }
+
+        return propertiy ; 
+    }
+
     
     async createUserProperty(user:IUser , createPropertyInput:CreatePropertyInput):Promise<StatusResult>{
         const {
