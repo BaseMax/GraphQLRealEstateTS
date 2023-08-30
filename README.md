@@ -8,7 +8,6 @@ This project is a property listing website that utilizes GraphQL in TypeScript f
 - View detailed information about a specific property.
 - Contact property sellers to inquire about properties.
 
-
 ## Demo
 
 ![Demo](./screenshots/1.png)
