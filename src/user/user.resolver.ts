@@ -15,7 +15,6 @@ export class UserResovler {
     @Authorized()
     @Query(()=>UserType)
     me(@Ctx() context:ContextType){
-        console.log(context.req.user)
         return context.req.user ; 
     }
 }
