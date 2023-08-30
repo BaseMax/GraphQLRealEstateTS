@@ -1,4 +1,4 @@
-# Property Listing Website with GraphQL
+# Real Estate: Property Listing Website with GraphQL
 
 This project is a property listing website that utilizes GraphQL in TypeScript for querying property data and performing mutations for user interactions. Users can search for properties, view property details, and contact sellers.
 
