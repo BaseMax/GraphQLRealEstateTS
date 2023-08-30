@@ -36,6 +36,12 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+type FavoriteType {
+  id: String!
+  property: PropertyType!
+  user: UserType!
+}
+
 input LoginInput {
   password: String!
   username: String!
@@ -51,11 +57,13 @@ type MessageType {
 
 type Mutation {
   RemoveReport(id: String!): StatusResult!
+  addPropertyReview(input: CreateReviewInput!): StatusResult!
+  addToFavorites(propertyId: String!): StatusResult!
   createProperty(input: CreatePropertyInput!): StatusResult!
   createReport(input: CreateReportInput!): StatusResult!
-  createReview(input: CreateReviewInput!): StatusResult!
   login(input: LoginInput!): AuthType!
   register(input: RegisterInput!): AuthType!
+  removeFromFavorites(id: String!): StatusResult!
   removeMessage(id: String!): StatusResult!
   removeReview(id: String!): StatusResult!
   sendMessage(input: CreateMessageInput!): StatusResult!
@@ -85,12 +93,14 @@ type PropertyType {
 type Query {
   findAllProperty: [PropertyType!]!
   findAllReview: [ReviewType!]!
+  findAllUserFavorite(id: String!): [FavoriteType!]!
   findAllUserReceived: [MessageType!]!
   findAllUserReport: [ReportType!]!
   findAllUserReview: [ReviewType!]!
   findAllUserSent: [MessageType!]!
   findOneProperty(id: String!): PropertyType!
   findOneReview(id: String!): ReviewType!
+  findOneUserFavorite(id: String!): FavoriteType!
   findOneUserReceived(id: String!): MessageType!
   findOneUserReport(id: String!): ReportType!
   findOneUserReview(id: String!): ReviewType!
